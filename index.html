@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlantic Union Bank Emerald — Enterprise Bento Banking</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            wfDark: '#070b09',
+            wfCard: 'rgba(16, 26, 21, 0.75)',
+            wfCardBorder: 'rgba(52, 211, 153, 0.12)',
+            wfGold: '#F59E0B',
+            wfGoldLight: '#FBBF24',
+            wfRed: '#DC2626',
+            wfEmerald: '#10B981',
+            wfEmeraldBright: '#34D399',
+            wfSlate: '#94a3b8'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070b09; }
+    ::-webkit-scrollbar-thumb { background: #162c22; border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10B981; }
+
+    /* Bento Card Glass Glow Effect */
+    .bento-card {
+      background: linear-gradient(145deg, rgba(16, 26, 21, 0.85) 0%, rgba(10, 16, 13, 0.9) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(52, 211, 153, 0.12);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bento-card:hover {
+      border-color: rgba(52, 211, 153, 0.28);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(16, 185, 129, 0.15);
+    }
+
+    .wf-gold-gradient {
+      background: linear-gradient(135deg, #D4AF37 0%, #F59E0B 50%, #B45309 100%);
+    }
+
+    .wf-card-mesh {
+      background: linear-gradient(135deg, #092017 0%, #113628 40%, #10B981 85%, #F59E0B 100%);
+    }
+
+    /* Spring Button Press Effects */
+    .btn-spring {
+      transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s ease;
+    }
+    .btn-spring:active {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+<body class="bg-[#050806] text-slate-100 font-sans min-h-screen flex flex-col selection:bg-wfEmerald selection:text-[#050806] antialiased">
+
+  <!-- ================================================================= -->
+  <!-- TOP NAVIGATION BAR -->
+  <!-- ================================================================= -->
+  <header class="sticky top-0 z-40 bg-[#070b09]/80 backdrop-blur-xl border-b border-wfCardBorder px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
+    
+    <!-- Left Logo & Account Switcher -->
+    <div class="flex items-center gap-6">
+      <div class="flex items-center gap-3">
+        <!-- Modernized WF Stagecoach Shield -->
+        <div class="h-10 w-10 rounded-2xl bg-gradient-to-tr from-[#991b1b] via-[#F59E0B] to-[#10B981] p-0.5 shadow-lg shadow-emerald-950/40">
+          <div class="h-full w-full bg-[#070b09] rounded-[14px] flex items-center justify-center text-wfGold">
+            <i class="fa-solid fa-shield-halved text-lg"></i>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-extrabold text-base tracking-tight text-white font-mono">Atlantic Union Bank</span>
+            <span class="bg-gradient-to-r from-wfEmerald to-emerald-400 text-[#050806] text-[9px] font-black px-1.5 py-0.5 rounded tracking-widest uppercase">EMERALD</span>
+          </div>
+          <p class="text-[10px] text-slate-400 font-medium">Private Premier Digital Banking</p>
+        </div>
+      </div>
+
+      <!-- Account Switcher Dropdown -->
+      <div class="hidden lg:flex items-center bg-[#0d1612] border border-wfCardBorder rounded-xl px-3 py-1.5 text-xs font-semibold">
+        <span class="h-2 w-2 rounded-full bg-wfEmerald mr-2 animate-pulse"></span>
+        <select class="bg-transparent text-slate-200 font-medium focus:outline-none cursor-pointer">
+          <option value="all">All Accounts (Checking + Wealth)</option>
+          <option value="checking">Emerald Preferred Checking (••8892)</option>
+          <option value="savings">High-Yield Treasury Savings (••4401)</option>
+          <option value="brokerage">Atlantic Union Bank Advisors Portfolio</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Center Search Bar -->
+    <div class="hidden md:flex items-center flex-1 max-w-md mx-4">
+      <div class="relative w-full">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+        <input 
+          id="global-search-input"
+          type="text" 
+          placeholder="Search Zelle, payees, transactions, routing #..." 
+          class="w-full bg-[#0c1410] border border-wfCardBorder rounded-xl pl-9 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-wfEmerald focus:ring-1 focus:ring-wfEmerald transition-all"
+        />
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono text-slate-500 bg-[#14221b] px-1.5 py-0.5 rounded">⌘K</span>
+      </div>
+    </div>
+
+    <!-- Right Controls & Status -->
+    <div class="flex items-center gap-3">
+      
+      <!-- FDIC Security Pill -->
+      <div class="hidden xl:flex items-center gap-2 bg-[#0c1410] border border-emerald-500/20 text-emerald-400 px-3 py-1.5 rounded-full text-[11px] font-medium">
+        <i class="fa-solid fa-lock text-[10px]"></i>
+        <span>FDIC Insured &bull; 256-Bit</span>
+      </div>
+
+      <!-- Privacy Mask Toggle Button -->
+      <button 
+        id="btn-privacy-toggle"
+        class="h-9 px-3 rounded-xl bg-[#0c1410] hover:bg-[#14221b] border border-wfCardBorder text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all btn-spring"
+        title="Toggle Privacy Mask"
+      >
+        <i id="privacy-icon" class="fa-solid fa-eye text-wfEmerald"></i>
+        <span class="hidden sm:inline">Hide Balances</span>
+      </button>
+
+      <!-- Notification Drawer Trigger -->
+      <button class="h-9 w-9 rounded-xl bg-[#0c1410] hover:bg-[#14221b] border border-wfCardBorder text-slate-300 hover:text-white flex items-center justify-center relative btn-spring">
+        <i class="fa-regular fa-bell text-sm"></i>
+        <span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-wfGold"></span>
+      </button>
+
+      <!-- User Avatar Profile -->
+      <div class="flex items-center gap-2.5 pl-2 border-l border-wfCardBorder">
+      
+        <div class="hidden sm:block text-left">
+          <p class="text-xs font-bold text-white tracking-tight leading-none">Laura Kim </p>
+          <span class="text-[10px] text-wfGold font-semibold">Premier Client</span>
+        </div>
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- ================================================================= -->
+  <!-- FULL SCREEN BENTO GRID MAIN CONTAINER -->
+  <!-- ================================================================= -->
+  <main class="flex-1 p-4 sm:p-6 md:p-8 max-w-[1800px] w-full mx-auto space-y-6">
+
+    <!-- SIMULATED ACCOUNT NOTICE -->
+    <section role="status" aria-labelledby="tax-notice-title" class="rounded-2xl border border-amber-500/30 bg-amber-950/30 p-4 sm:p-5">
+      <div class="flex items-start gap-3">
+        <i class="fa-solid fa-triangle-exclamation mt-0.5 text-amber-400" aria-hidden="true"></i>
+        <div>
+          <p class="mb-1 text-[10px] font-extrabold uppercase tracking-widest text-amber-400"> Account status</p>
+          <h2 id="tax-notice-title" class="text-sm font-bold text-white">Some account features are temporarily restricted</h2>
+          <p class="mt-1 text-xs leading-relaxed text-slate-300">We couldn’t verify the tax information on file. Please review it. Access can be restored after the issue is resolved.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- TOP BENTO SECTION: HERO BALANCE, ZELLE & WAVE ANALYTICS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- BENTO CELL 1: HERO WALLET (Spans 2 Columns) -->
+      <div class="bento-card md:col-span-2 rounded-3xl p-6 sm:p-7 flex flex-col justify-between relative overflow-hidden group">
+        <!-- Background Ambient Glow -->
+        <div class="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div>
+          <!-- Top Row info -->
+          <div class="flex items-center justify-between gap-4 mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Primary Premier Wealth</span>
+             
+            </div>
+            <span class="text-xs font-mono text-wfGold bg-wfGold/10 border border-wfGold/20 px-2.5 py-1 rounded-lg">
+              Acct: •••• 8892
+            </span>
+          </div>
+
+          <!-- Total Balance Display -->
+          <div class="my-2">
+            <h1 id="hero-balance-text" class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight font-mono">
+              $487,420<span class="text-slate-400 text-3xl sm:text-4xl">.50</span>
+            </h1>
+            <p class="text-xs text-slate-400 mt-1 flex items-center gap-2">
+              <span>Available Liquidity: <strong class="text-emerald-400 font-mono">$312,800.00</strong></span>
+              <span>&bull;</span>
+              <span>Invested: <strong class="text-wfGold font-mono">$74,620.50</strong></span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Micro Card Snapshot + Quick Action Toolbar -->
+        <div class="mt-6 pt-6 border-t border-wfCardBorder flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          
+          <!-- Mini Card Badge -->
+          <div class="flex items-center gap-3 bg-[#0d1612] p-2.5 rounded-2xl border border-wfCardBorder">
+            <div class="h-10 w-16 rounded-xl wf-card-mesh p-2 text-white flex flex-col justify-between shadow-md shrink-0">
+              <div class="flex justify-between items-center text-[7px] font-bold">
+                <span>WF</span>
+                <i class="fa-brands fa-cc-visa"></i>
+              </div>
+              <span class="text-[8px] font-mono tracking-widest font-extrabold">8892</span>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white">Atlantic Union Bank Emerald Visa Signature®</p>
+              <p class="text-[10px] text-emerald-400 font-medium">Unlimited 3% Cash Back Active</p>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex items-center gap-2">
+            <button id="btn-action-transfer" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-wfEmerald hover:bg-emerald-400 text-[#050806] font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/20 btn-spring">
+              <i class="fa-solid fa-paper-plane text-xs"></i> Transfer
+            </button>
+            <button id="btn-action-zelle" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#611f69] hover:bg-[#74277e] text-white font-extrabold text-xs flex items-center justify-center gap-1.5 border border-purple-400/30 btn-spring">
+              <i class="fa-solid fa-bolt text-amber-300 text-xs"></i> Zelle®
+            </button>
+            <button id="btn-action-deposit" class="px-3 py-2.5 rounded-xl bg-[#121f19] hover:bg-[#1a2d24] text-slate-200 border border-wfCardBorder text-xs font-semibold btn-spring" title="Mobile Deposit">
+              <i class="fa-solid fa-camera text-wfEmerald"></i>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- BENTO CELL 2: Atlantic Union Bank ZELLE & FAST PAY HUB -->
+      <div class="bento-card rounded-3xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <div class="h-6 w-6 rounded-lg bg-purple-900/60 text-purple-300 border border-purple-500/30 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <h3 class="font-bold text-sm text-white">Zelle® Express Pay</h3>
+            </div>
+            <span class="text-[10px] text-purple-300 font-semibold bg-purple-950/80 px-2 py-0.5 rounded-full border border-purple-500/30">Instant</span>
+          </div>
+
+          <p class="text-xs text-slate-400 mb-4">Send money instantly using recipient mobile or email.</p>
+
+          <!-- Quick Contact Avatars -->
+          <div class="grid grid-cols-4 gap-2 text-center mb-4">
+            <button class="zelle-contact-btn group flex flex-col items-center" data-name="Barrack Wayne" data-handle="barrack@zelle.com">
+              <div class="h-11 w-11 rounded-full bg-emerald-500 text-slate-900 font-extrabold text-xs flex items-center justify-center shadow-md group-hover:scale-110 transition-transform border-2 border-[#070b09]">
+                BW
+              </div>
+              <span class="text-[10px] font-semibold text-slate-300 mt-1 truncate w-full">Barrack</span>
+            </button>
+
+            <button class="zelle-contact-btn group flex flex-col items-center" data-name="Aliam Gent" data-handle="aliam@zelle.com">
+              <div class="h-11 w-11 rounded-full bg-purple-600 text-white font-extrabold text-xs flex items-center justify-center shadow-md group-hover:scale-110 transition-transform border-2 border-[#070b09]">
+                AG
+              </div>
+              <span class="text-[10px] font-semibold text-slate-300 mt-1 truncate w-full">Aliam</span>
+            </button>
+
+            <button class="zelle-contact-btn group flex flex-col items-center" data-name="Elizabeth Wall" data-handle="elizabeth@zelle.com">
+              <div class="h-11 w-11 rounded-full bg-amber-500 text-slate-900 font-extrabold text-xs flex items-center justify-center shadow-md group-hover:scale-110 transition-transform border-2 border-[#070b09]">
+                EW
+              </div>
+              <span class="text-[10px] font-semibold text-slate-300 mt-1 truncate w-full">Elizabeth</span>
+            </button>
+
+            <button class="zelle-contact-btn group flex flex-col items-center" data-name="Gordon Yong" data-handle="gordon@zelle.com">
+              <div class="h-11 w-11 rounded-full bg-sky-500 text-slate-900 font-extrabold text-xs flex items-center justify-center shadow-md group-hover:scale-110 transition-transform border-2 border-[#070b09]">
+                GY
+              </div>
+              <span class="text-[10px] font-semibold text-slate-300 mt-1 truncate w-full">Gordon</span>
+            </button>
+          </div>
+        </div>
+
+        <button id="btn-open-zelle-modal" class="w-full py-2.5 bg-[#121f19] hover:bg-[#1a2d24] text-slate-200 border border-wfCardBorder font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors btn-spring">
+          <i class="fa-solid fa-plus text-wfEmerald"></i> Add New Zelle Contact
+        </button>
+      </div>
+
+      <!-- BENTO CELL 4: FICO® SCORE & CREDIT HEALTH -->
+      <div class="bento-card rounded-3xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-slate-400">FICO® Score 8</span>
+            <span class="text-[10px] font-bold text-wfEmerald bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Updated Today</span>
+          </div>
+
+          <!-- Gauge Display -->
+          <div class="relative py-2 text-center flex flex-col items-center justify-center">
+            <svg class="w-36 h-20 overflow-visible" viewBox="0 0 100 50">
+              <path d="M 10,50 A 40,40 0 0,1 90,50" fill="none" stroke="#162c22" stroke-width="10" stroke-linecap="round" />
+              <path d="M 10,50 A 40,40 0 0,1 82,25" fill="none" stroke="#10B981" stroke-width="10" stroke-linecap="round" />
+            </svg>
+            <div class="mt-[-2.5rem]">
+              <span class="text-3xl font-extrabold font-mono text-white">815</span>
+              <p class="text-[10px] font-extrabold text-emerald-400 tracking-wider uppercase">EXCELLENT</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-[#0c1410] p-3 rounded-2xl border border-wfCardBorder space-y-1.5 text-xs">
+          <div class="flex justify-between">
+            <span class="text-slate-400">Total Credit Line:</span>
+            <span class="font-bold font-mono text-white">$120,000.00</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">Utilization Rate:</span>
+            <span class="font-bold text-emerald-400 font-mono">4.2% (Low Risk)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MIDDLE BENTO SECTION: WAVE ANALYTICS & SAVINGS VAULTS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- BENTO CELL 3: WAVE ANALYTICS & CASH FLOW (Spans 2 Columns) -->
+      <div class="bento-card lg:col-span-2 rounded-3xl p-6 flex flex-col justify-between">
+        <div>
+          <!-- Header & Timeframe Pills -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h3 class="font-bold text-base text-white">Financial Cash Flow Analytics</h3>
+              <p class="text-xs text-slate-400">Interactive comparison of income inflows vs. luxury outflows</p>
+            </div>
+
+            <div class="flex items-center bg-[#0c1410] p-1 rounded-xl border border-wfCardBorder text-xs font-semibold self-start sm:self-auto">
+              <button class="px-3 py-1 rounded-lg bg-wfEmerald text-[#050806] font-bold shadow">1M</button>
+              <button class="px-3 py-1 rounded-lg text-slate-400 hover:text-white">3M</button>
+              <button class="px-3 py-1 rounded-lg text-slate-400 hover:text-white">6M</button>
+              <button class="px-3 py-1 rounded-lg text-slate-400 hover:text-white">1Y</button>
+            </div>
+          </div>
+
+          <!-- Key Metrics Pills -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+            <div class="bg-[#0c1410] p-3 rounded-2xl border border-wfCardBorder">
+              <span class="text-[10px] text-slate-400 uppercase font-bold">Total Inflow</span>
+              <p class="text-lg font-bold font-mono text-emerald-400">+$28,450.00</p>
+            </div>
+            <div class="bg-[#0c1410] p-3 rounded-2xl border border-wfCardBorder">
+              <span class="text-[10px] text-slate-400 uppercase font-bold">Total Outflow</span>
+              <p class="text-lg font-bold font-mono text-amber-400">-$6,210.40</p>
+            </div>
+            <div class="bg-[#0c1410] p-3 rounded-2xl border border-wfCardBorder col-span-2 sm:col-span-1">
+              <span class="text-[10px] text-slate-400 uppercase font-bold">Net Savings Rate</span>
+              <p class="text-lg font-bold font-mono text-white">78.1%</p>
+            </div>
+          </div>
+
+          <!-- Interactive SVG Wave Graph -->
+          <div class="h-52 w-full relative group">
+            <!-- Scrubber Hover Vertical Line -->
+            <div id="chart-scrubber" class="absolute top-0 bottom-6 w-0.5 bg-wfGold hidden pointer-events-none transition-all">
+              <div class="h-3 w-3 rounded-full bg-wfGold border-2 border-[#050806] -ml-1.25 -mt-1 shadow-lg"></div>
+            </div>
+
+            <!-- Scrubber Tooltip -->
+            <div id="chart-tooltip" class="absolute top-2 left-1/2 -translate-x-1/2 bg-wfGold text-[#050806] font-mono font-extrabold text-[11px] px-3 py-1 rounded-full shadow-xl hidden">
+              Jun: +$24,500 Inflow / -$3,100 Outflow
+            </div>
+
+            <svg id="bento-wave-svg" class="w-full h-full overflow-visible cursor-crosshair" viewBox="0 0 500 150">
+              <defs>
+                <linearGradient id="emeraldGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#10B981" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#10B981" stop-opacity="0.0"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Income Area Fill -->
+              <path d="M 0,100 C 70,40 140,110 220,50 C 300,20 380,80 500,30 L 500,150 L 0,150 Z" fill="url(#emeraldGradient)" />
+
+              <!-- Income Line -->
+              <path d="M 0,100 C 70,40 140,110 220,50 C 300,20 380,80 500,30" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round" />
+
+              <!-- Outflow Wave Line -->
+              <path d="M 0,120 C 80,130 150,90 230,110 C 310,130 400,70 500,95" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="5 5" stroke-linecap="round" />
+            </svg>
+
+            <!-- X-Axis Months -->
+            <div class="flex items-center justify-between text-[11px] font-semibold text-slate-400 mt-2">
+              <span>Jan</span>
+              <span>Feb</span>
+              <span>Mar</span>
+              <span>Apr</span>
+              <span>May</span>
+              <span class="text-wfEmerald font-bold">Jun</span>
+              <span>Jul</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BENTO CELL 5: BENTO SAVINGS & VAULT GOALS -->
+      <div class="bento-card rounded-3xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-base text-white">Savings Vaults</h3>
+            <button id="btn-add-vault" class="text-xs font-bold text-wfEmerald hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-plus"></i> New Vault
+            </button>
+          </div>
+
+          <!-- Progress Bars -->
+          <div class="space-y-4">
+            <!-- Vault 1 -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs">
+                <span class="font-bold text-slate-200">Emergency Reserve Vault</span>
+                <span class="font-mono text-emerald-400 font-bold">$94,000 / $100k</span>
+              </div>
+              <div class="h-2.5 w-full bg-[#0c1410] rounded-full overflow-hidden border border-wfCardBorder">
+                <div class="h-full bg-gradient-to-r from-emerald-500 to-wfEmerald rounded-full" style="width: 94%"></div>
+              </div>
+              <span class="text-[10px] text-slate-400">94% Completed &bull; 5.2% APY Yielding</span>
+            </div>
+
+            <!-- Vault 2 -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs">
+                <span class="font-bold text-slate-200">Zurich Real Estate Fund</span>
+                <span class="font-mono text-amber-400 font-bold">$68,000 / $100k</span>
+              </div>
+              <div class="h-2.5 w-full bg-[#0c1410] rounded-full overflow-hidden border border-wfCardBorder">
+                <div class="h-full bg-gradient-to-r from-amber-500 to-wfGold rounded-full" style="width: 68%"></div>
+              </div>
+              <span class="text-[10px] text-slate-400">68% Completed</span>
+            </div>
+
+            <!-- Vault 3 -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs">
+                <span class="font-bold text-slate-200">Luxury Travel & Aviation</span>
+                <span class="font-mono text-purple-400 font-bold">$21,000 / $50k</span>
+              </div>
+              <div class="h-2.5 w-full bg-[#0c1410] rounded-full overflow-hidden border border-wfCardBorder">
+                <div class="h-full bg-purple-500 rounded-full" style="width: 42%"></div>
+              </div>
+              <span class="text-[10px] text-slate-400">42% Completed</span>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-deposit-vault-drawer" class="w-full mt-6 py-2.5 bg-[#121f19] hover:bg-[#1a2d24] text-slate-200 border border-wfCardBorder font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors btn-spring">
+          <i class="fa-solid fa-vault text-wfGold"></i> Deposit Into Vaults
+        </button>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM BENTO SECTION: TRANSACTIONS FEED & CASH BACK REWARDS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- BENTO CELL 6: TRANSACTIONS & ACTIVITY FEED (Spans 2 Columns) -->
+      <div class="bento-card lg:col-span-2 rounded-3xl p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <h3 class="font-bold text-base text-white">Recent Transactions</h3>
+            <p class="text-xs text-slate-400">Real-time ledger updates with instant receipt views</p>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+            <button class="tx-filter-btn px-3 py-1 rounded-lg bg-wfEmerald text-[#050806] font-bold text-xs" data-filter="all">All</button>
+            <button class="tx-filter-btn px-3 py-1 rounded-lg bg-[#0c1410] text-slate-400 hover:text-white border border-wfCardBorder text-xs" data-filter="income">Income</button>
+            <button class="tx-filter-btn px-3 py-1 rounded-lg bg-[#0c1410] text-slate-400 hover:text-white border border-wfCardBorder text-xs" data-filter="expenses">Expenses</button>
+          </div>
+        </div>
+
+        <!-- Transactions Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-wfCardBorder text-[10px] font-bold uppercase text-slate-500 tracking-wider">
+                <th class="pb-3 px-2">Merchant / Recipient</th>
+                <th class="pb-3 px-2">Category</th>
+                <th class="pb-3 px-2">Date & Time</th>
+                <th class="pb-3 px-2 text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="transactions-table-body" class="divide-y divide-emerald-500/10 text-xs">
+              <!-- Rendered via JavaScript dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BENTO CELL 7: MERCHANT DEALS & CASH BACK REWARDS -->
+      <div class="bento-card rounded-3xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-[#fa-tag] fa-tag text-wfGold"></i>
+              <h3 class="font-bold text-base text-white">Premier Cash Back</h3>
+            </div>
+            <span class="text-[10px] text-amber-400 font-bold bg-amber-950/80 px-2 py-0.5 rounded border border-amber-500/30">Activate</span>
+          </div>
+
+          <div class="space-y-3">
+            <!-- Reward Item 1 -->
+            <div class="p-3 rounded-2xl bg-[#0c1410] border border-wfCardBorder flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="h-9 w-9 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-white font-bold">
+                  <i class="fa-brands fa-apple text-base"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-white">Apple Store</p>
+                  <p class="text-[10px] text-emerald-400 font-semibold">10% Cash Back Active</p>
+                </div>
+              </div>
+              <button class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold hover:bg-emerald-500 hover:text-[#050806] transition-colors btn-spring">
+                Activated
+              </button>
+            </div>
+
+            <!-- Reward Item 2 -->
+            <div class="p-3 rounded-2xl bg-[#0c1410] border border-wfCardBorder flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="h-9 w-9 rounded-xl bg-emerald-950 border border-emerald-800 flex items-center justify-center text-emerald-400 font-bold">
+                  <i class="fa-solid fa-plane text-sm"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-white">Delta Air Lines</p>
+                  <p class="text-[10px] text-amber-400 font-semibold">15% Flight Bonus</p>
+                </div>
+              </div>
+              <button class="px-3 py-1 rounded-lg bg-wfGold text-[#050806] font-bold text-[10px] hover:bg-amber-400 transition-colors btn-spring">
+                Activate
+              </button>
+            </div>
+
+            <!-- Reward Item 3 -->
+            <div class="p-3 rounded-2xl bg-[#0c1410] border border-wfCardBorder flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="h-9 w-9 rounded-xl bg-green-900 border border-green-700 flex items-center justify-center text-green-300 font-bold">
+                  <i class="fa-solid fa-mug-hot text-sm"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-white">Starbucks Reserve</p>
+                  <p class="text-[10px] text-emerald-400 font-semibold">5% Daily Rewards</p>
+                </div>
+              </div>
+              <button class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold hover:bg-emerald-500 hover:text-[#050806] transition-colors btn-spring">
+                Activated
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 rounded-2xl bg-gradient-to-r from-amber-950/60 to-emerald-950/60 border border-wfGold/30 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-trophy text-wfGold text-sm"></i>
+            <span class="text-xs font-semibold text-slate-200">Lifetime Cash Earned</span>
+          </div>
+          <span class="text-xs font-extrabold font-mono text-wfGold">$4,892.20</span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- MODALS & SLIDE-OVER DRAWERS -->
+  <!-- ================================================================= -->
+
+  <!-- TRANSFER / ZELLE MODAL -->
+  <div id="modal-transfer" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bento-card rounded-3xl max-w-md w-full p-6 text-slate-100 shadow-2xl relative border border-wfCardBorder">
+      
+      <div class="flex items-center justify-between pb-4 border-b border-wfCardBorder mb-5">
+        <div class="flex items-center gap-2.5">
+          <div class="h-8 w-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <i class="fa-solid fa-paper-plane text-sm"></i>
+          </div>
+          <h3 class="font-bold text-base text-white">Express Transfer / Zelle®</h3>
+        </div>
+        <button class="close-modal-btn p-1 text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">Recipient Name, Email or Phone</label>
+          <input id="transfer-recipient-input" type="text" placeholder="e.g. Barrack Wayne or (555) 019-2831" class="w-full px-4 py-2.5 rounded-xl bg-[#0c1410] border border-wfCardBorder text-xs text-white focus:outline-none focus:border-wfEmerald">
+        </div>
+
+        <div>
+          <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">Amount ($ USD)</label>
+          <input id="transfer-amount-input" type="number" placeholder="0.00" class="w-full px-4 py-2.5 rounded-xl bg-[#0c1410] border border-wfCardBorder text-sm font-mono font-bold text-white focus:outline-none focus:border-wfEmerald">
+        </div>
+
+        <div>
+          <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">From Account</label>
+          <select class="w-full px-4 py-2.5 rounded-xl bg-[#0c1410] border border-wfCardBorder text-xs text-slate-200 focus:outline-none">
+            <option>Emerald Preferred Checking (••8892) - $312,800.00</option>
+            <option>High-Yield Treasury Savings (••4401) - $74,620.50</option>
+          </select>
+        </div>
+
+        <button id="btn-submit-transfer" class="w-full py-3 bg-wfEmerald hover:bg-emerald-400 text-[#050806] font-extrabold rounded-xl text-xs shadow-lg shadow-emerald-500/20 transition-all btn-spring mt-2">
+          Authorize & Send Instantly
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RECEIPT MODAL -->
+  <div id="modal-receipt" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bento-card rounded-3xl max-w-sm w-full p-6 text-slate-100 shadow-2xl relative border border-wfCardBorder text-center">
+      
+      <div class="flex justify-between items-center pb-3 border-b border-wfCardBorder mb-4">
+        <span class="text-xs font-mono font-bold text-wfGold">Atlantic Union Bank RECEIPT</span>
+        <button class="close-modal-btn p-1 text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div class="h-14 w-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mx-auto mb-3">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+
+      <h4 id="receipt-merchant" class="font-bold text-lg text-white">Merchant Name</h4>
+      <p id="receipt-date" class="text-xs text-slate-400 mb-3">Today, 02:45 PM</p>
+      
+      <div id="receipt-amount" class="text-3xl font-extrabold font-mono text-emerald-400 mb-4">+$0.00</div>
+
+      <div class="bg-[#0c1410] rounded-2xl p-3 text-xs space-y-2 border border-wfCardBorder text-left">
+        <div class="flex justify-between">
+          <span class="text-slate-400">Status</span>
+          <span class="font-bold text-emerald-400">FDIC Settled & Verified</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Reference Hash</span>
+          <span class="font-mono text-[10px] text-slate-300">WF-99201-882</span>
+        </div>
+      </div>
+
+      <button class="close-modal-btn w-full py-2.5 mt-5 bg-[#121f19] hover:bg-[#1a2d24] text-white font-bold rounded-xl text-xs border border-wfCardBorder btn-spring">
+        Close Receipt
+      </button>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APP CONTROLLER -->
+  <script>
+    // --- MOCK TRANSACTION DATA ---
+    const TRANSACTIONS = [
+      { id: 't1', title: 'Atlantic Union Bank Direct Deposit', category: 'Corporate Income', amount: 14500.00, date: 'Today, 09:15 AM', status: 'Settled', isIncome: true, icon: 'fa-building-columns' },
+      { id: 't2', title: 'Zelle Wire from Barrack Wayne', category: 'Zelle Transfer', amount: 2157.60, date: 'Today, 07:25 AM', status: 'Settled', isIncome: true, icon: 'fa-bolt' },
+      { id: 't3', title: 'Apple Store Regent St.', category: 'Luxury Retail', amount: -1499.00, date: 'Yesterday', status: 'Settled', isIncome: false, icon: 'fa-apple' },
+      { id: 't4', title: 'Gulfstream Charter Fuel', category: 'Aviation & Travel', amount: -4250.00, date: '22 Oct', status: 'Settled', isIncome: false, icon: 'fa-plane' },
+      { id: 't5', title: 'BlackRock Horizon Dividend', category: 'Investments', amount: 3820.50, date: '20 Oct', status: 'Settled', isIncome: true, icon: 'fa-chart-line' },
+    ];
+
+    // --- DOM ELEMENTS ---
+    const transactionsTableBody = document.getElementById('transactions-table-body');
+    const heroBalanceText = document.getElementById('hero-balance-text');
+    const btnPrivacyToggle = document.getElementById('btn-privacy-toggle');
+    const privacyIcon = document.getElementById('privacy-icon');
+    let privacyHidden = false;
+
+    // --- RENDER TRANSACTIONS ---
+    function renderTransactions(filter = 'all') {
+      transactionsTableBody.innerHTML = '';
+      
+      const filtered = TRANSACTIONS.filter(tx => {
+        if (filter === 'income') return tx.isIncome;
+        if (filter === 'expenses') return !tx.isIncome;
+        return true;
+      });
+
+      filtered.forEach(tx => {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-emerald-500/5 cursor-pointer transition-colors';
+        row.onclick = () => openReceiptModal(tx);
+
+        row.innerHTML = `
+          <td class="py-3.5 px-2 flex items-center gap-3">
+            <div class="h-9 w-9 rounded-xl bg-[#0c1410] border border-wfCardBorder flex items-center justify-center text-wfEmerald font-bold text-sm">
+              <i class="fa-solid ${tx.icon}"></i>
+            </div>
+            <div>
+              <p class="font-bold text-white">${tx.title}</p>
+              <p class="text-[10px] text-slate-400">${tx.category}</p>
+            </div>
+          </td>
+          <td class="py-3.5 px-2 text-slate-400 text-xs">${tx.category}</td>
+          <td class="py-3.5 px-2 text-slate-400 text-xs">${tx.date}</td>
+          <td class="py-3.5 px-2 text-right font-mono font-bold text-sm ${tx.isIncome ? 'text-emerald-400' : 'text-slate-100'}">
+            ${privacyHidden ? '••••' : (tx.isIncome ? '+' : '') + '$' + Math.abs(tx.amount).toLocaleString(undefined, {minimumFractionDigits: 2})}
+          </td>
+        `;
+
+        transactionsTableBody.appendChild(row);
+      });
+    }
+
+    // Filter Buttons logic
+    document.querySelectorAll('.tx-filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.tx-filter-btn').forEach(b => {
+          b.className = 'tx-filter-btn px-3 py-1 rounded-lg bg-[#0c1410] text-slate-400 hover:text-white border border-wfCardBorder text-xs';
+        });
+        e.target.className = 'tx-filter-btn px-3 py-1 rounded-lg bg-wfEmerald text-[#050806] font-bold text-xs';
+        renderTransactions(e.target.getAttribute('data-filter'));
+      });
+    });
+
+    // Privacy Mask Toggle
+    btnPrivacyToggle.addEventListener('click', () => {
+      privacyHidden = !privacyHidden;
+      if (privacyHidden) {
+        heroBalanceText.innerHTML = '••••••••••';
+        privacyIcon.className = 'fa-solid fa-eye-slash text-wfGold';
+      } else {
+        heroBalanceText.innerHTML = '$387,420<span class="text-slate-400 text-3xl sm:text-4xl">.50</span>';
+        privacyIcon.className = 'fa-solid fa-eye text-wfEmerald';
+      }
+      renderTransactions();
+    });
+
+    // --- MODALS HANDLERS ---
+    const modalTransfer = document.getElementById('modal-transfer');
+    const modalReceipt = document.getElementById('modal-receipt');
+    const transferRecipientInput = document.getElementById('transfer-recipient-input');
+    const transferAmountInput = document.getElementById('transfer-amount-input');
+
+    const openTransferModal = (name = '') => {
+      transferRecipientInput.value = name;
+      transferAmountInput.value = '';
+      modalTransfer.classList.remove('hidden');
+    };
+
+    document.getElementById('btn-action-transfer').addEventListener('click', () => openTransferModal());
+    document.getElementById('btn-action-zelle').addEventListener('click', () => openTransferModal());
+    document.getElementById('btn-open-zelle-modal').addEventListener('click', () => openTransferModal());
+
+    document.querySelectorAll('.zelle-contact-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        openTransferModal(btn.getAttribute('data-name'));
+      });
+    });
+
+    document.querySelectorAll('.close-modal-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        modalTransfer.classList.add('hidden');
+        modalReceipt.classList.add('hidden');
+      });
+    });
+
+    document.getElementById('btn-submit-transfer').addEventListener('click', () => {
+      const recipient = transferRecipientInput.value || 'Zelle Contact';
+      const amount = parseFloat(transferAmountInput.value) || 500.00;
+
+      TRANSACTIONS.unshift({
+        id: 't' + Date.now(),
+        title: 'Zelle Transfer to ' + recipient,
+        category: 'Instant Wire',
+        amount: -amount,
+        date: 'Just now',
+        status: 'Settled',
+        isIncome: false,
+        icon: 'fa-bolt'
+      });
+
+      modalTransfer.classList.add('hidden');
+      renderTransactions();
+    });
+
+    function openReceiptModal(tx) {
+      document.getElementById('receipt-merchant').textContent = tx.title;
+      document.getElementById('receipt-date').textContent = tx.date;
+      document.getElementById('receipt-amount').textContent = (tx.isIncome ? '+' : '-') + '$' + Math.abs(tx.amount).toLocaleString(undefined, {minimumFractionDigits: 2});
+      document.getElementById('receipt-amount').className = `text-3xl font-extrabold font-mono mb-4 ${tx.isIncome ? 'text-emerald-400' : 'text-[#f59e0b]'}`;
+      modalReceipt.classList.remove('hidden');
+    }
+
+    // --- CHART HOVER SCRUBBER ---
+    const svg = document.getElementById('bento-wave-svg');
+    const scrubber = document.getElementById('chart-scrubber');
+    const tooltip = document.getElementById('chart-tooltip');
+
+    svg.addEventListener('mousemove', (e) => {
+      const rect = svg.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      scrubber.style.left = `${x}px`;
+      scrubber.classList.remove('hidden');
+      tooltip.classList.remove('hidden');
+    });
+
+    svg.addEventListener('mouseleave', () => {
+      scrubber.classList.add('hidden');
+      tooltip.classList.add('hidden');
+    });
+
+    // Initialize
+    renderTransactions();
+  </script>
+
+</body>
+</html>
