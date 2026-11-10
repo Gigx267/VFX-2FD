@@ -17,6 +17,9 @@
     tailwind.config = {
       theme: {
         extend: {
+          screens: {
+            xs: '400px',
+          },
           colors: {
             wfDark: '#070b09',
             wfCard: 'rgba(16, 26, 21, 0.75)',
@@ -150,17 +153,27 @@
         <span class="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-wfGold"></span>
       </button>
 
-      <!-- User Avatar Profile — NOW VISIBLE ON ALL SCREENS -->
+      <!-- User Avatar Profile — WITH PROFILE IMAGE -->
       <div class="flex items-center gap-2 sm:gap-2.5 pl-2 sm:pl-2.5 border-l border-wfCardBorder">
-        <!-- Avatar Circle (always visible) -->
-        <div class="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gradient-to-tr from-wfEmerald to-wfGold flex items-center justify-center text-[#050806] font-extrabold text-xs sm:text-sm shadow-md shrink-0">
-          LK
+        <!-- Avatar Image with gradient ring + online status dot -->
+        <div class="relative shrink-0">
+          <div class="h-8 w-8 sm:h-9 sm:w-9 rounded-full p-[2px] bg-gradient-to-tr from-wfEmerald via-emerald-400 to-wfGold shadow-md">
+            <img
+              src="https://i.pravatar.cc/80?img=47"
+              alt="Laura Kim profile photo"
+              class="h-full w-full rounded-full object-cover border border-[#070b09]"
+              loading="lazy"
+              onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Laura+Kim&background=10B981&color=050806&bold=true&size=80';"
+            />
+          </div>
+          <!-- Online status dot -->
+          <span class="absolute bottom-0 right-0 h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-wfEmerald border-2 border-[#070b09]"></span>
         </div>
 
         <!-- Name & Role (visible on all screens) -->
-        <div class="text-left min-w-0">
+        <div class="text-left min-w-0 max-w-[72px] sm:max-w-none">
           <p class="text-[11px] sm:text-xs font-bold text-white tracking-tight leading-none truncate">Laura Kim</p>
-          <span class="text-[9px] sm:text-[10px] text-wfGold font-semibold">Premier Client</span>
+          <span class="text-[9px] sm:text-[10px] text-wfGold font-semibold truncate block">Premier Client</span>
         </div>
       </div>
 
